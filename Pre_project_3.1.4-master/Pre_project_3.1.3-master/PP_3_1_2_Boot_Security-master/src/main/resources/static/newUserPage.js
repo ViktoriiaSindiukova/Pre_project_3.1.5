@@ -1,50 +1,31 @@
-let formNew = document.getElementById("newUserForm");
-newUser();
-function newUser() {
-    document.getElementById('newUserForm').addEventListener('submit', (e) => {
-        e.preventDefault();
+const formNewUser = document.getElementById('newUserForm');
+let newRole = document.querySelector('#rolesNew').selectedOptions;
 
-        let roles = [];
-        for (let i = 0; i < formNew.roles.options.length; i++) {
-            if (formNew.roles.options[i].selected)
-                roles.push({
-                    id: formNew.roles.options[i].value,
-                    role: formNew.roles.options[i].text
-                });
-        }
-
-        fetch("http://localhost:8080/api/admin/users", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8'
-            },
-            body: JSON.stringify({
-                username: document.getElementById('usernameNew').value,
-                lastName: document.getElementById('lastNameNew').value,
-                age: document.getElementById('ageNew').value,
-                email: document.getElementById('emailNew').value,
-                password: document.getElementById('passwordNew').value,
-                roles: document.getElementById('rolesNew').value.
-                split(' ').map(elem => ({role: elem, id: elem === 'ROLE_USER' ? 2 : 1, roles: [] }))
-
-            })
+formNewUser.addEventListener('submit', newUser => {
+    newUser.preventDefault()
+    let roles = []
+    for (let i = 0; i < newRole.length; i++) {
+        roles.push({
+            id: newRole[i].value
         })
-            .then((response) => {
-                if (response.ok) {
-                    document.getElementById('usernameNew').value = '';
-                    document.getElementById('lastNameNew').value = '';
-                    document.getElementById('ageNew').value = '';
-                    document.getElementById('emailNew').value = '';
-                    document.getElementById('passwordNew').value = '';
-                    document.getElementById('rolesNew').value = '';
-                    document.getElementById('users-tab').click()
-
-                    getAllUsers();
-
-                }
-            })
+    }
+    let method = {
+        method: 'POST',
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            username: formNewUser.username.value,
+            name: formNewUser.name.value,
+            age: formNewUser.age.value,
+            email: formNewUser.email.value,
+            password: formNewUser.password.value,
+            roles: roles
+        })
+    }
+    fetch(url, method).then(() => {
+        formNewUser.reset();
+        getAllUsers();
     })
-}
+});
 
 function loadRoles() {
     let selectAdd = document.getElementById("rolesNew");

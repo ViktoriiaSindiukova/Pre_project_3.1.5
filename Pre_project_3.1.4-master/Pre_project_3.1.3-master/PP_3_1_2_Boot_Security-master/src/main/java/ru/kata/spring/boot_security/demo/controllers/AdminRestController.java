@@ -42,11 +42,6 @@ public class AdminRestController {
         return new ResponseEntity<>(roleService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/roles/{id}")
-    public ResponseEntity<Collection<Role>> getRole(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(userService.findUserById(id).getRoles(), HttpStatus.OK);
-    }
-
     @PostMapping
     public ResponseEntity<HttpStatus> createNewUser(@RequestBody @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {

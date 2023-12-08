@@ -154,11 +154,11 @@
             <div class="modal-body">
                 <div class="container">
                     <div class="row ">
-                        <form id="modalEdit">
+                        <form id="modalEdit" name="edit">
 
                             <div class="mb-3 text-center">
                                 <label for="editId"><b>Id</b></label>
-                                <input class="form-control" type="text" name="id"
+                                <input class="form-control" type="text" name="idEdit"
                                        id="editId" disabled>
                             </div>
 
@@ -207,9 +207,9 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                         id="editClose">Close
-                                    <button type="button" class="btn btn-primary" id="editBtn"
-                                            onclick="editUser()">Edit
-                                    </button>
+                                </button>
+                                <button type="button" class="btn btn-primary" id="editBtn">
+                                    Edit
                                 </button>
                             </div>
                         </form>
@@ -284,7 +284,6 @@
                                         id="deleteRoles"
                                         name="roles"
                                         disabled>
-
                                 </select>
                             </div>
                         </form>
@@ -308,6 +307,8 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 <script src="/adminPage.js"></script>
+<script src="/editPage.js"></script>
+<script src="/deletePage.js"></script>
 <script src="/newUserPage.js"></script>
 </body>
 
