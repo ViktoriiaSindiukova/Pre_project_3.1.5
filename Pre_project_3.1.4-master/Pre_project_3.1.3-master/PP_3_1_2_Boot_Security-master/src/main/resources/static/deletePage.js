@@ -1,7 +1,7 @@
-function deleteModal(id) {
+async function deleteModal(id) {
     let delId = `${url}/${id}`;
     loadRolesForDelete(id);
-    fetch(delId, {
+    await fetch(delId, {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json;charset=UTF-8'
@@ -13,7 +13,6 @@ function deleteModal(id) {
             document.getElementById('deleteLastName').value = user.lastName;
             document.getElementById('deleteAge').value = user.age;
             document.getElementById('deleteEmail').value = user.email;
-            document.getElementById('deleteRoles').value = user.roles;
         })
     });
 }
@@ -34,15 +33,15 @@ async function deleteUser() {
     })
 }
 
-function loadRolesForDelete(id) {
+async function loadRolesForDelete(id) {
     let selectDelete = document.getElementById("deleteRoles");
     selectDelete.innerHTML = "";
     let delId = `${url}/roles/${id}`;
 
-    fetch(delId)
+    await fetch(delId)
         .then(res => res.json())
-        .then(user => {
-            user.forEach(role => {
+        .then(role => {
+            role.forEach(role => {
                 let option = document.createElement("option");
                 option.value = role.id;
                 option.text = role.authority;

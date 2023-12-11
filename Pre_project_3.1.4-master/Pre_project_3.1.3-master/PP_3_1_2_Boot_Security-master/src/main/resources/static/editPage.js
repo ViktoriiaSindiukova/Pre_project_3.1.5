@@ -1,9 +1,15 @@
 const formEditUser = document.getElementById('modalEdit')
 let editRole = document.querySelector('#editRole').selectedOptions
 
-function editModal(id) {
+async function editModal(id) {
+    let editId = `${url}/${id}`;
     loadRolesForEdit();
-    fetch("api/admin/users/" + id).then(res => {
+    await fetch(editId, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json;charset=UTF-8'
+        }
+    }).then(res => {
         res.json().then(user => {
             document.getElementById('editId').value = user.id;
             document.getElementById('editName').value = user.username;
@@ -15,8 +21,8 @@ function editModal(id) {
     });
 }
 
-formEditUser.addEventListener('submit', editUser => {
-    editUser.preventDefault()
+async function editUser() {
+    let urlEdit = `${url}/${formEditUser.idEdit.value}`;
     let roles = []
     for (let i = 0; i < editRole.length; i++) {
         roles.push({
@@ -26,7 +32,7 @@ formEditUser.addEventListener('submit', editUser => {
     let method = {
         method: 'PATCH',
         headers: {"Content-Type": "application/json",
-            "Accept": "application/json"},
+            'Accept': 'application/json'},
         body: JSON.stringify({
             id: formEditUser.idEdit.value,
             username:formEditUser.username.value,
@@ -37,11 +43,11 @@ formEditUser.addEventListener('submit', editUser => {
             roles:roles
         })
     }
-    fetch(url+ formEditUser.idEdit.value,method).then(() => {
-        document.getElementById("editClose").click();
+    await fetch(urlEdit, method).then(() => {
+        closeModal();
         getAllUsers();
     })
-});
+}
 
 function loadRolesForEdit() {
     let selectEdit = document.getElementById("editRole");
